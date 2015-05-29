@@ -8,7 +8,7 @@ var keypress = require('keypress')
 
 
 exports.up = function up(degrees){
-  degrees = degrees || .5;
+  degrees = degrees || 2.3;
 	stopTime = Math.floor(degrees * 22.3);
   console.log("degrees", degrees, "stopTime", stopTime);
 	setTimeout(function(){ThunderConnector.command('up');},0);
@@ -16,7 +16,7 @@ exports.up = function up(degrees){
 }
 
 exports.down = function down(degrees){
-  degrees = degrees || .5;
+  degrees = degrees || 2.3;
 	stopTime = Math.floor(degrees * 22.3);
   console.log("degrees", degrees, "stopTime", stopTime);
 	setTimeout(function(){ThunderConnector.command('down');},0);
@@ -24,14 +24,14 @@ exports.down = function down(degrees){
 }
 
 exports.turnRightDegrees = function turnRightDegrees(degrees){
-  degrees = degrees || .5;
+  degrees = degrees || 2.3;
 	stopTime = Math.floor(degrees * 22.3)
 	setTimeout(function(){ThunderConnector.command('right');},0);
 	setTimeout(function(){ThunderConnector.command('stop');},stopTime);
 }
 
 exports.turnLeftDegrees = function turnLeftDegrees(degrees){
-  degrees = degrees || .5;
+  degrees = degrees || 2.3;
 	stopTime = Math.floor(degrees * 22.3)
 	setTimeout(function(){ThunderConnector.command('left');},0);
 	setTimeout(function(){ThunderConnector.command('stop');},stopTime);
@@ -39,6 +39,11 @@ exports.turnLeftDegrees = function turnLeftDegrees(degrees){
 
 exports.fire = function fire(){
 	setTimeout(function(){ThunderConnector.command('fire');},0);
+}
+
+exports.doublefire = function doublefire(){
+  setTimeout(function(){ThunderConnector.command('fire');},0);
+  setTimeout(function(){ThunderConnector.command('fire');},4000);
 }
 
 keypress(process.stdin);
@@ -62,8 +67,20 @@ process.stdin.on('keypress', function (ch, key) {
   } else if (key.name == 'space'){
   	console.log("fired");
   	exports.fire();
+  } else if (key.name == 'f'){
+    console.log("doublefire");
+    exports.doublefire();
+  } else if (key && key.name =="w" && key.shift == true) {
+    missile.up(0.5);
+  } else if (key && key.name =="s" && key.shift == true) {
+    missile.down(0.5);
+  } else if (key && key.name =="d" && key.shift == true) {
+    missile.turnLeftDegrees(0.5);
+  }else if (key && key.name =="a" && key.shift == true) {
+    missile.turnRightDegrees(0.5);
+  }else if (key && key.name =="space" && key.shift == true) {
+    missile.fire(0.5);
   }
-
 
   if (key && key.ctrl && key.name == 'c') {
     process.stdin.pause();
