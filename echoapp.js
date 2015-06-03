@@ -52,26 +52,46 @@ https.createServer(options, function(req, res) {
             console.log('JSON', theRequest.request);
             if (typeof theRequest.request.intent !== 'undefined') {
                 choice = theRequest.request.intent.slots.Choice.value;
+                degrees = theRequest.request.intent.slots.Degrees.value;
+            if (degrees == "undefined") degrees = 5;
+                 console.log("degrees",degrees);
                 echoResponse.response.outputSpeech.text = choice;
 
+                //  if(degrees === "choice"){
+                //     degrees = degrees || 2.3;
+                //     stopTime = Math.floor(degrees * 22.3);
+                //     console.log("degrees", degrees, "stopTime", stopTime);
+                //     echoResponse.response.outputSpeech.text = 'left';
+                //     setTimeout(function(){ThunderConnector.command('left');},0);
+                //     setTimeout(function(){ThunderConnector.command('stop');},1000);
+                // }
                 if(choice === "left"){
+                    stopTime = Math.floor(degrees * 22.3);
+                    console.log("degrees", degrees, "stopTime",stopTime);
                     echoResponse.response.outputSpeech.text = 'left';
                     setTimeout(function(){ThunderConnector.command('left');},0);
-                    setTimeout(function(){ThunderConnector.command('stop');},1000);
+                    setTimeout(function(){ThunderConnector.command('stop');},stopTime);
                 }
                 if(choice === "right"){
+                    stopTime = Math.floor(degrees * 22.3);
+                    console.log("degrees", degrees, "stopTime", stopTime);
                     echoResponse.response.outputSpeech.text = 'right';
                     setTimeout(function(){ThunderConnector.command('right');},0);
-                    setTimeout(function(){ThunderConnector.command('stop');},1000);
-                }                if(choice === "up"){
+                    setTimeout(function(){ThunderConnector.command('stop');},stopTime);
+                }               
+                 if(choice === "up"){
+                    stopTime = Math.floor(degrees * 22.3);
+                    console.log("degrees", degrees, "stopTime", stopTime);
                     echoResponse.response.outputSpeech.text = 'up';
                     setTimeout(function(){ThunderConnector.command('up');},0);
-                    setTimeout(function(){ThunderConnector.command('stop');},500);
+                    setTimeout(function(){ThunderConnector.command('stop');},stopTime);
                 } 
                 if(choice === "down"){
+                    stopTime = Math.floor(degrees * 22.3);
+                    console.log("degrees", degrees, "stopTime", stopTime);
                     echoResponse.response.outputSpeech.text = 'down';
                     setTimeout(function(){ThunderConnector.command('down');},0);
-                    setTimeout(function(){ThunderConnector.command('stop');},500);
+                    setTimeout(function(){ThunderConnector.command('stop');},stopTime);
                 } 
                 if(choice === "stop"){
                     echoResponse.response.outputSpeech.text = 'stop';
